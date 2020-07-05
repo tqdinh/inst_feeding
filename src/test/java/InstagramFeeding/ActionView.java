@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -26,7 +27,7 @@ public class ActionView {
 	private static AppiumDriver driver=null;
 	private static DesiredCapabilities capabilities = null;
 	private static Wait<MobileDriver> mobileWait;
-	
+	private static final int DEFAULT_TIMEOUT = 10000;// 10 secs ;
 	
 	protected static  class LaucherActivityElements
 	{
@@ -59,14 +60,27 @@ public class ActionView {
 	        }
 		}
 
-		public static void ContinueAsFB()
+		public static  boolean  ContinueAsFB()
 		{
+			boolean ret=true;
 			By mobileBy= By.id(enum_element.facebook_text_switcher.getString());
 			
-			SleepUntilInmilisecs(mobileBy, 5);
+			if(true==SleepUntilInmilisecs(mobileBy, 5))
+			{
+				// see this mobileBy
+				MobileElement mobileElement =(MobileElement) driver.findElement(mobileBy);
+				mobileElement.click();
+				
+			}
+			else
+			{
+				// dont see this mobileBy
+				ret=false;
+			}
 			
-			MobileElement mobileElement =(MobileElement) driver.findElement(mobileBy);
-			mobileElement.click();
+			return ret;
+			
+			
 			
 		}
 	}
@@ -108,10 +122,19 @@ public class ActionView {
 	public void Testing()
 	{
 		LaucherActivityElements.ContinueAsFB();
-		
 	}
 	
 	
+	public void scrollBy(By locator, int xPixel, int yPixel) {
+		try {
+			Actions act = new Actions(driver);
+			SleepUntilInmilisecs(locator, DEFAULT_TIMEOUT);
+			act.moveToElement(driver.findElement(locator)).clickAndHold().moveByOffset(xPixel, yPixel).release()
+					.pause(1500).perform();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	public void onActionScroolUp()
@@ -132,9 +155,20 @@ public class ActionView {
 		return fluentWait;
 	}
 
-	public static  void SleepUntilInmilisecs(By object, int milisecs) {
-		mobileWait = setupFluentWait(milisecs, 1);
-		mobileWait.until(ExpectedConditions.visibilityOfElementLocated(object));
+	public static  boolean SleepUntilInmilisecs(By object, int milisecs) {
+		boolean ret=true;
+		try
+		{
+			mobileWait = setupFluentWait(milisecs, 1);
+			mobileWait.until(ExpectedConditions.visibilityOfElementLocated(object));
+		}
+		catch(Exception e)
+		{
+			System.out.print(e.toString());
+			ret=false;
+		}
+		
+		return ret;
 	}
 	
 	
