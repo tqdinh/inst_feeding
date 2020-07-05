@@ -2,8 +2,6 @@ package InstagramFeeding;
 
 public class ActionModel {
 	
-	
-	
 	public void ScroolUpOrDown(boolean upOrDown)
 	{
 		

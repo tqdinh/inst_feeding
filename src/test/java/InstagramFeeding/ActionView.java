@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -24,78 +25,84 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 
 public class ActionView {
-	private static AppiumDriver driver=null;
+	private static AppiumDriver driver = null;
 	private static DesiredCapabilities capabilities = null;
 	private static Wait<MobileDriver> mobileWait;
 	private static final int DEFAULT_TIMEOUT = 10000;// 10 secs ;
-	
-	protected static  class LaucherActivityElements
-	{
-		
-		static ArrayList<String>strLaucherActivityElement=new ArrayList() {{
-			add("com.instagram.android:id/facebook_text_switcher");
-			add("com.instagram.android:id/sign_up_with_email_or_phone");
-			add("com.instagram.android:id/log_in_button");
-
-			}};
-		enum enum_element
-		{
-		
-			facebook_text_switcher(0),
-			sign_up_with_email_or_phone(1),
-			log_in_button(2);
-			
-	        public int getVal() {
-	            return val;
-	        }
-
-	        private int val = 0;
-
-	        enum_element(int val) {
-	            this.val = val;
-	        }
-
-	        public String getString() {
-	            return strLaucherActivityElement.get(val);
-	        }
-		}
-
-		public static  boolean  ContinueAsFB()
-		{
-			boolean ret=true;
-			By mobileBy= By.id(enum_element.facebook_text_switcher.getString());
-			
-			if(true==SleepUntilInmilisecs(mobileBy, 5))
-			{
-				// see this mobileBy
-				MobileElement mobileElement =(MobileElement) driver.findElement(mobileBy);
-				mobileElement.click();
-				
-			}
-			else
-			{
-				// dont see this mobileBy
-				ret=false;
-			}
-			
-			return ret;
-			
-			
-			
-		}
-	}
-	
-	
-	
 
 	
-	
+//
+//		static ArrayList<String> strElements = new ArrayList() {
+//			{
+//				add("com.instagram.android:id/facebook_text_switcher");
+//				add("com.instagram.android:id/sign_up_with_email_or_phone");
+//				add("com.instagram.android:id/log_in_button");
+//
+//			}
+//		};
+//
+//		enum enum_element {
+//
+//			facebook_text_switcher(0), sign_up_with_email_or_phone(1), log_in_button(2);
+//
+//			public int getVal() {
+//				return val;
+//			}
+//
+//			private int val = 0;
+//
+//			enum_element(int val) {
+//				this.val = val;
+//			}
+//
+//			public String getString() {
+//				return strElements.get(val);
+//			}
+//		}
+//
+//		
+//	}
+//
+//	protected static class MainActivityElements {
+//		static ArrayList<String> strElements = new ArrayList() {
+//			{
+//				add("com.instagram.android:id/action_bar_root");
+//			}
+//		};
+//
+//		enum enum_element {
+//			layout_container_main(0);
+//
+//			public int getVal() {
+//				return val;
+//			}
+//
+//			private int val = 0;
+//
+//			enum_element(int val) {
+//				this.val = val;
+//			}
+//
+//			public String getString() {
+//				return strElements.get(val);
+//			}
+//		}
+//
+//		public static By getByOfScroolDownNewfeed() {
+//
+//			By mobileBy = By.id(enum_element.layout_container_main.getString());
+//			
+//			List<MobileElement> list=driver.findElements(mobileBy);
+//			return mobileBy;
+//
+//		}
+//	}
 
 	@BeforeMethod
 	private void before() {
 		capabilities = new DesiredCapabilities();
 		capabilities.setCapability("deviceName", AppConfiguration.deviceName);
-		
+
 		capabilities.setCapability("automationName", AppConfiguration.automationName);
 		capabilities.setCapability("noReset", "true");
 		capabilities.setCapability(AndroidMobileCapabilityType.PLATFORM_NAME, AppConfiguration.platformname);
@@ -114,62 +121,67 @@ public class ActionView {
 
 	@AfterMethod
 	private void after() {
-		//driver.quit();
+		// driver.quit();
 	}
-	
-	
+
 	@Test
-	public void Testing()
-	{
-		LaucherActivityElements.ContinueAsFB();
+	public void Testing() {
+
+//		LaucherActivityElements.ContinueAsFB();
+		
+//		By scrool = MainActivityElements.getByOfScroolDownNewfeed();
+//		
+//		for(int i=0;i<15;i++)
+//		{
+//			System.out.print("scroll "+i);
+//			scrollBy(scrool, 100, -500);
+//			
+//		}
+//		
+		
+
+		// 
+
 	}
-	
-	
+
 	public void scrollBy(By locator, int xPixel, int yPixel) {
 		try {
+			
+			
 			Actions act = new Actions(driver);
-			SleepUntilInmilisecs(locator, DEFAULT_TIMEOUT);
 			act.moveToElement(driver.findElement(locator)).clickAndHold().moveByOffset(xPixel, yPixel).release()
 					.pause(1500).perform();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public void onActionScroolUp()
-	{
-		
+
+	public void onActionScroolUp() {
+
 	}
-	
-	
-	public void onActionScroolDown()
-	{
-		
+
+	public void onActionScroolDown() {
+
 	}
-	
-	private static  Wait<MobileDriver> setupFluentWait(int timeoutInSeconds, int pollingTimeInSeconds) {
+
+	private static Wait<MobileDriver> setupFluentWait(int timeoutInSeconds, int pollingTimeInSeconds) {
 		Wait<MobileDriver> fluentWait = new FluentWait<MobileDriver>(driver)
 				.withTimeout(Duration.ofSeconds(timeoutInSeconds))
 				.pollingEvery(Duration.ofSeconds(pollingTimeInSeconds)).ignoring(NoSuchElementException.class);
 		return fluentWait;
 	}
 
-	public static  boolean SleepUntilInmilisecs(By object, int milisecs) {
-		boolean ret=true;
-		try
-		{
+	public static boolean SleepUntilInmilisecs(By object, int milisecs) {
+		boolean ret = true;
+		try {
 			mobileWait = setupFluentWait(milisecs, 1);
 			mobileWait.until(ExpectedConditions.visibilityOfElementLocated(object));
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			System.out.print(e.toString());
-			ret=false;
+			ret = false;
 		}
-		
+
 		return ret;
 	}
-	
-	
+
 }
