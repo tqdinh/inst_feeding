@@ -25,10 +25,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 
 public class ActionView {
-	private static AppiumDriver driver = null;
-	private static DesiredCapabilities capabilities = null;
-	private static Wait<MobileDriver> mobileWait;
-	private static final int DEFAULT_TIMEOUT = 10000;// 10 secs ;
+	
 
 	
 //
@@ -98,26 +95,8 @@ public class ActionView {
 //		}
 //	}
 
-	@BeforeMethod
-	private void before() {
-		capabilities = new DesiredCapabilities();
-		capabilities.setCapability("deviceName", AppConfiguration.deviceName);
-
-		capabilities.setCapability("automationName", AppConfiguration.automationName);
-		capabilities.setCapability("noReset", "true");
-		capabilities.setCapability(AndroidMobileCapabilityType.PLATFORM_NAME, AppConfiguration.platformname);
-		capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, AppConfiguration.APP_PACKAGE);
-		capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, AppConfiguration.APP_ACTIVITY);
-
-		try {
-			driver = new AndroidDriver(new URL(AppConfiguration.url_automatic_server), capabilities);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-	}
+	
+	//}
 
 	@AfterMethod
 	private void after() {
@@ -144,44 +123,44 @@ public class ActionView {
 
 	}
 
-	public void scrollBy(By locator, int xPixel, int yPixel) {
-		try {
-			
-			
-			Actions act = new Actions(driver);
-			act.moveToElement(driver.findElement(locator)).clickAndHold().moveByOffset(xPixel, yPixel).release()
-					.pause(1500).perform();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void onActionScroolUp() {
-
-	}
-
-	public void onActionScroolDown() {
-
-	}
-
-	private static Wait<MobileDriver> setupFluentWait(int timeoutInSeconds, int pollingTimeInSeconds) {
-		Wait<MobileDriver> fluentWait = new FluentWait<MobileDriver>(driver)
-				.withTimeout(Duration.ofSeconds(timeoutInSeconds))
-				.pollingEvery(Duration.ofSeconds(pollingTimeInSeconds)).ignoring(NoSuchElementException.class);
-		return fluentWait;
-	}
-
-	public static boolean SleepUntilInmilisecs(By object, int milisecs) {
-		boolean ret = true;
-		try {
-			mobileWait = setupFluentWait(milisecs, 1);
-			mobileWait.until(ExpectedConditions.visibilityOfElementLocated(object));
-		} catch (Exception e) {
-			System.out.print(e.toString());
-			ret = false;
-		}
-
-		return ret;
-	}
+//	public void scrollBy(By locator, int xPixel, int yPixel) {
+//		try {
+//			
+//			
+//			Actions act = new Actions(driver);
+//			act.moveToElement(driver.findElement(locator)).clickAndHold().moveByOffset(xPixel, yPixel).release()
+//					.pause(1500).perform();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	public void onActionScroolUp() {
+//
+//	}
+//
+//	public void onActionScroolDown() {
+//
+//	}
+//
+//	private static Wait<MobileDriver> setupFluentWait(int timeoutInSeconds, int pollingTimeInSeconds) {
+//		Wait<MobileDriver> fluentWait = new FluentWait<MobileDriver>(driver)
+//				.withTimeout(Duration.ofSeconds(timeoutInSeconds))
+//				.pollingEvery(Duration.ofSeconds(pollingTimeInSeconds)).ignoring(NoSuchElementException.class);
+//		return fluentWait;
+//	}
+//
+//	public static boolean SleepUntilInmilisecs(By object, int milisecs) {
+//		boolean ret = true;
+//		try {
+//			mobileWait = setupFluentWait(milisecs, 1);
+//			mobileWait.until(ExpectedConditions.visibilityOfElementLocated(object));
+//		} catch (Exception e) {
+//			System.out.print(e.toString());
+//			ret = false;
+//		}
+//
+//		return ret;
+//	}
 
 }

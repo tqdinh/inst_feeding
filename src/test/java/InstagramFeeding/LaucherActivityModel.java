@@ -6,19 +6,7 @@ import fiato.testing.Facebook;
 
 public class LaucherActivityModel {
 
-	
-	private static  LaucherActivityModel instance=null;
-	
-	public static LaucherActivityModel getInstance() {
-		
-		if (null == instance) {
-			instance = new LaucherActivityModel();
-		}
-		return instance;
-	}
 
-	
-	
 	 static ArrayList<String> strElements = new ArrayList() {
 		{
 			add("com.instagram.android:id/facebook_text_switcher");
@@ -28,7 +16,7 @@ public class LaucherActivityModel {
 		}
 	};
 
-	enum enum_element {
+	public enum enum_element {
 
 		facebook_text_switcher(0), sign_up_with_email_or_phone(1), log_in_button(2);
 
@@ -47,8 +35,9 @@ public class LaucherActivityModel {
 		}
 	}
 	
-	private LaucherActivityModel() {
-		
+	public String getElementOnString(enum_element element)
+	{
+		return element.toString();
 	}
 	
 }

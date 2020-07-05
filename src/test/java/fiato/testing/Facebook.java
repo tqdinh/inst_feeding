@@ -36,7 +36,6 @@ public class Facebook {
 
 	private AppiumDriver driver;
 	private Wait<MobileDriver> mobileWait;
-
 	private static Facebook instance = null;
 
 	private static DesiredCapabilities capabilities = null;
