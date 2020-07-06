@@ -6,7 +6,8 @@ import fiato.testing.Facebook;
 
 public class LaucherActivityModel {
 
-
+	
+	InterfaceLaucherActivityModel listener=null;
 	 static ArrayList<String> strElements = new ArrayList() {
 		{
 			add("com.instagram.android:id/facebook_text_switcher");
@@ -35,9 +36,33 @@ public class LaucherActivityModel {
 		}
 	}
 	
-	public String getElementOnString(enum_element element)
+	
+	
+	
+	public void  getElementOnString(enum_element element)
 	{
-		return element.toString();
+	
+			listener.onResult(element.getString());
+
+	}
+	
+	public interface  InterfaceLaucherActivityModel
+	{
+		public void onResult(String result);
+		public void onError(String result);
+	}
+	
+	
+	
+	public void register(InterfaceLaucherActivityModel r)
+	{
+		listener=r;
+		
+	}
+	
+	public void unregister(InterfaceLaucherActivityModel r)
+	{
+		listener=null;
 	}
 	
 }

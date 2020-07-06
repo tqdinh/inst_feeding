@@ -18,69 +18,65 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
 
-public class LaucherActivityViewModel {
+public class LaucherActivityViewModel  {
 
-	
-	static LaucherActivityViewModel instance=null;
-	public static LaucherActivityViewModel getInstance()
-	{
-		if(null==instance)
-		{
-			instance=new LaucherActivityViewModel();
-		}
-		return instance;
-	}
-	
-	LaucherActivityViewModel()
-	{
-		
-	}
-	
 	LaucherActivityModel model = null;
 
-	ArrayList<TestingAction> observervable = new ArrayList();
+	BaseView activity = null;
 
-	public void registerAction(TestingAction action) {
-		if (!observervable.contains(action))
-			observervable.add(action);
-	}
-
-	public void unregisterAction(TestingAction action) {
-		if (observervable.contains(action))
-			observervable.remove(action);
-	}
-
-	public LaucherActivityViewModel() {
+	LaucherActivityViewModel(BaseView myActivity) {
+		activity = myActivity;
 		model = new LaucherActivityModel();
+//		model.register(this);
 	}
 
-	@BeforeMethod
-	public void before() {
-
+	public void Clear() {
+//		model.unregister(this);
 	}
 
-	@AfterMethod
-	public void after() {
+//	ArrayList<InterfaceLaucherActivityViewModel> observervable = new ArrayList();
+	InterfaceLaucherActivityViewModel listener = null;
 
+	public void registerAction(InterfaceLaucherActivityViewModel action) {
+		listener=action;
 	}
 
-	@Test
-	public void test() {
+	public void unregisterAction(InterfaceLaucherActivityViewModel action) {
+		listener=null;
+	}
+
+	public void getContinueAsFBId() {
+		
+		model.register(new LaucherActivityModel.InterfaceLaucherActivityModel() {
+			
+			public void onResult(String result) {
+				// TODO Auto-generated method stub
+				if(null!=listener)
+					listener.onResult(result);
+			}
+			
+			public void onError(String error) {
+				// TODO Auto-generated method stub
+				if(null!=listener)
+					listener.onError(error);
+			}
+		});
+		model.getElementOnString(LaucherActivityModel.enum_element.facebook_text_switcher);
 		
 	}
+
+
+
 	
-	public void ContinueAsFb()
-	{
-		for( TestingAction each : observervable)
-		{
-			each.ContinueAsFB(model.getElementOnString(LaucherActivityModel.enum_element.facebook_text_switcher));
-		}
-		
-	}
 
-	public interface TestingAction {
-		public void ContinueAsFB(String id);
+
+	public interface InterfaceLaucherActivityViewModel {
+		public void onResult(String result);
+
+		public void onError(String result);
 
 	}
+
+
 
 }

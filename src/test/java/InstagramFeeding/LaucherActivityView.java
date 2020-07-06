@@ -17,25 +17,71 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 
-public  class LaucherActivityView extends BaseView implements LaucherActivityViewModel.TestingAction {
+public  class LaucherActivityView extends BaseView {
 	
 	AppiumDriver driver=null;
 	Wait<MobileDriver> mobileWait=null;
 	
-	LaucherActivityView()
+	LaucherActivityViewModel viewModel = null;
+	
+	public LaucherActivityView()
+	{
+		
+	}
+	
+	public void InitMyActivity()
 	{
 		this.driver=driver;
 		this.mobileWait=mobileWait;
-	
-	}
-	
-	public void ContinueAsFB(String id) {
-		By by=this.app.findById(id);
-		MobileElement element=this.app.findElement(by, 1000);
-		if(null!=element)
-			element.click();
-			
+		viewModel=new LaucherActivityViewModel(this);
 		
 	}
+	
+	
+	@BeforeMethod
+	public void before() {
+		InitMyActivity();
+		
+	}
+
+	@AfterMethod
+	public void after() {
+		
+	}
+
+	@Test
+	public void test() {
+		final InstagramAppication app=this.getApp();
+		ContinueAsFB(new LaucherActivityViewModel.InterfaceLaucherActivityViewModel() {
+			
+			public void onResult(String result) {
+				// TODO Auto-generated method stub
+				
+				By by=app.findById(result);
+				MobileElement element=app.findElement(by, 1000);
+				if(null!=element)
+					element.click();
+				
+			}
+			
+			public void onError(String result) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	
+	public void ContinueAsFB(LaucherActivityViewModel.InterfaceLaucherActivityViewModel action) {
+		
+		viewModel.registerAction(action);
+		viewModel.getContinueAsFBId();
+	
+		
+	}
+
+
+
+	
 			
 }
