@@ -24,6 +24,9 @@ public  class LaucherActivityView extends BaseView {
 	
 	LaucherActivityViewModel viewModel = null;
 	
+	
+	MainActivityView mainActivity=null;
+	
 	public LaucherActivityView()
 	{
 		
@@ -31,9 +34,11 @@ public  class LaucherActivityView extends BaseView {
 	
 	public void InitMyActivity()
 	{
-		this.driver=driver;
-		this.mobileWait=mobileWait;
+		this.driver=getDriver();
+		this.mobileWait=getMobileWait();
 		viewModel=new LaucherActivityViewModel(this);
+		
+		 mainActivity=new MainActivityView();
 		
 	}
 	
@@ -47,6 +52,7 @@ public  class LaucherActivityView extends BaseView {
 	@AfterMethod
 	public void after() {
 		
+		driver.quit();
 	}
 
 	@Test
@@ -58,13 +64,25 @@ public  class LaucherActivityView extends BaseView {
 				// TODO Auto-generated method stub
 				
 				By by=app.findById(result);
-				MobileElement element=app.findElement(by, 1000);
+				MobileElement element=app.findElement(by, 3);
 				if(null!=element)
 					element.click();
+				
+				
+				try {
+					Thread.sleep(2000);
+					
+					mainActivity.InitMyActivity();
+					mainActivity.test();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 			
 			public void onError(String result) {
+				String fail="";
 				// TODO Auto-generated method stub
 				
 			}

@@ -41,6 +41,18 @@ public class InstagramAppication {
 		init();
 	}
 
+	
+	public AppiumDriver getDriver()
+	{
+		return driver;
+	}
+	
+	
+	public Wait<MobileDriver> getMobileWait()
+	{
+		return mobileWait;
+	}
+	
 	private void clean() {
 		driver.quit();
 	}
@@ -69,10 +81,10 @@ public class InstagramAppication {
 		driver.quit();
 	}
 
-	public  MobileElement findElement(By locator, int timeout) {
+	public  MobileElement findElement(By locator, int timeoutInSecond) {
 		MobileElement ret = null;
 
-		if(true==SleepUntilInmilisecs(locator, timeout))
+		if(true==SleepUntilInmilisecs(locator, timeoutInSecond))
 			ret = (MobileElement) driver.findElement(locator);
 		
 		return ret;
@@ -87,10 +99,10 @@ public class InstagramAppication {
 	
 	
 	
-	public boolean SleepUntilInmilisecs(By object, int milisecs) {
+	public boolean SleepUntilInmilisecs(By object, int timeoutInSecond) {
 		boolean ret = true;
 		try {
-			mobileWait = setupFluentWait(milisecs, 1);
+			mobileWait = setupFluentWait(timeoutInSecond, 1);
 			mobileWait.until(ExpectedConditions.visibilityOfElementLocated(object));
 		} catch (Exception e) {
 			System.out.print(e.toString());
