@@ -1,8 +1,11 @@
 package InstagramFeeding;
 
 import java.time.Duration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.support.ui.Wait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -71,11 +74,7 @@ public class MainActivityView extends BaseView {
 					Thread.sleep(1000);
 					touchSomeOneStory();
 					
-					Thread.sleep(1000);
-					if(true!=BackClick())
-					{
-						closeVideoView();
-					}
+					
 					Thread.sleep(1000);
 				}
 			} catch (InterruptedException e) {
@@ -115,10 +114,10 @@ public class MainActivityView extends BaseView {
 		TouchAction toa = new AndroidTouchAction(this.driver);
 
 		int number_random1 = 2;// (int)getRandomNumber(2,5);
-		int number_random2 = 9;// (int)getRandomNumber(2,5);
-		LongPressOptions lpo = new LongPressOptions().withDuration(Duration.ofMillis(1))
+		int number_random2 = 5;// (int)getRandomNumber(2,5);
+		LongPressOptions lpo = new LongPressOptions().withDuration(Duration.ofMillis(100))
 				.withPosition(new PointOption().point(sizeX / number_random1, sizeY * number_random2 / 10));
-		toa.longPress(lpo).moveTo(new PointOption().point(sizeX / number_random1, sizeY - sizeY * 5 / 10)).release();
+		toa.longPress(lpo).moveTo(new PointOption().point(sizeX / number_random1, sizeY*(number_random2-2)/10)).release();
 
 		return toa;
 
@@ -142,8 +141,156 @@ public class MainActivityView extends BaseView {
 		int number_random = (int) getRandomNumber(2, 9);
 		toa.press(new PointOption().point(sizeX / number_random, sizeY * number_random / 10)).release().perform();
 
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		By by = By.id("bottom_sheet_container");
+		MobileElement element = app.findElement(by, 1);
+		if(null!=element)
+		{
+			WatchVideoAndSweepDown();
+		}
+		else
+		{
+			SweepMultipleImageLeft();
+		}
+		
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(true!=BackClick())
+		{
+			closeVideoView();
+		}
+		
+		
+		
+		
+	}
+	
+	public void LikePost()
+	{
+		By by_like = By.id("com.instagram.android:id/row_feed_button_like");
+		MobileElement element_like = app.findElement(by_like, 1);
+		if (null != element_like)
+			element_like.click();
+		
+	}
+	public void SavePost()
+	{
+		By by = By.id("com.instagram.android:id/row_feed_button_save");
+		MobileElement element = app.findElement(by, 1);
+		if (null != element)
+			element.click();
+		
+	}
+	
+	public void SweepMultipleImageLeft()
+	{
+		By by_page_indicator=By.id("com.instagram.android:id/carousel_page_indicator");
+		MobileElement element_page_indicator = app.findElement(by_page_indicator, 1);
+		if (null != element_page_indicator)			
+		{
+			// get position of element 
+			
+			
+			MobileElement element_carousel_image=app.findElement(By.id("com.instagram.android:id/carousel_image"), 1);
+			if(null!=element_carousel_image)
+			{
+				
+				int numberOfImg=0;
+				String content_desc=element_carousel_image.getAttribute("content-desc");
+				String patter_string="\\s\\d\\sof\\s\\d\\s";
+				Pattern r = Pattern.compile(patter_string);
+				  Matcher m = r.matcher(content_desc);
+			      if (m.find( )) {
+			    	 
+			    	  String numberAOfBPattern="\\s\\d\\s$";
+			    	  String stringNumberFound=m.group(0);
+			    	  
+			    	  Pattern numberFormat = Pattern.compile(numberAOfBPattern);
+			    	  Matcher numberMatch = numberFormat.matcher(stringNumberFound);
+			    	  if (numberMatch.find( ))
+			    	  {
+			    		  String str_number=numberMatch.group(0).toString().trim();
+			    		  numberOfImg=Integer.parseInt(str_number);
+			    	  }
+			    	  
+			    	  
+			    	 
+			    	  
+			       
+			      }
+				
+				for(int i =0;i<numberOfImg;i++)
+				{
+					Point location_img=element_carousel_image.getLocation();
+					int width_img=element_carousel_image.getSize().getWidth();
+					int heigh_img=element_carousel_image.getSize().getHeight();
+					
+		
+					
+					Point startPosition=new Point(location_img.x+width_img*7/10,location_img.y+heigh_img/2);
+					Point endPosition=new Point(location_img.x+10,location_img.y+heigh_img/2);
+					
+					TouchAction toa = new AndroidTouchAction(this.driver);
+					LongPressOptions lpo = new LongPressOptions().withDuration(Duration.ofMillis(1))
+							.withPosition(new PointOption().point(startPosition));
+					toa.longPress(lpo).moveTo(new PointOption().point(endPosition)).release().perform();
+				}
+				
+				
+			}
+		}
+		
+		
 	}
 
+	
+	public void WatchVideoAndSweepDown()
+	{
+		
+		By by = By.id("bottom_sheet_container");
+		MobileElement element = app.findElement(by, 1);
+		if(null!=element)
+		{
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			int sizeX = this.driver.manage().window().getSize().getWidth();
+			int sizeY = this.driver.manage().window().getSize().getHeight();
+			
+			TouchAction toa0 = new AndroidTouchAction(this.driver);
+//			TouchAction toa1 = new AndroidTouchAction(this.driver);
+
+			LongPressOptions lpo0 = new LongPressOptions().withDuration(Duration.ofMillis(1))
+					.withPosition(new PointOption().point(sizeX*6/10,120));
+			toa0.longPress(lpo0).moveTo(new PointOption().point(sizeX *6/ 10, sizeY * 9 / 10)).release();
+			
+			
+//			LongPressOptions lpo1 = new LongPressOptions().withDuration(Duration.ofMillis(1))
+//					.withPosition(new PointOption().point(sizeX*6/10,120));
+//			toa1.longPress(lpo1).moveTo(new PointOption().point(sizeX *6/ 10, sizeY * 9 / 10)).release();
+			
+			MultiTouchAction m = new MultiTouchAction(this.driver);
+			m.add(toa0).add(toa0).perform();
+		}
+		
+	}
 	public void closeVideoView() {
 
 		By by_close = By.id("com.instagram.android:id/close_button");

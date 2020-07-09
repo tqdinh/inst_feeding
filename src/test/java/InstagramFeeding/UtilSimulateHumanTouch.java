@@ -28,7 +28,9 @@ public class UtilSimulateHumanTouch {
 		int random_number = (int)(Math.random() * ((max - min) + 1)) + min;
 		for(int i=0;i<distance_in_pixcel;i+=random_number)
 		{
-			random_number = (int)(Math.random() * ((max - min) + 1)) + min;
+//			PointOption p=new PointOption().point(new Point())
+//			random_number = (int)(Math.random() * ((max - min) + 1)) + min;
+			
 		}
 		
 		
