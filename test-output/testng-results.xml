@@ -1,88 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="1" ignored="0" total="1" passed="0">
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="12789" started-at="2020-07-09T00:13:50Z" finished-at="2020-07-09T00:14:03Z">
+  <suite name="Default suite" duration-ms="15747" started-at="2020-07-09T22:43:34Z" finished-at="2020-07-09T22:43:50Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="12789" started-at="2020-07-09T00:13:50Z" finished-at="2020-07-09T00:14:03Z">
+    <test name="Default test" duration-ms="15747" started-at="2020-07-09T22:43:34Z" finished-at="2020-07-09T22:43:50Z">
       <class name="InstagramFeeding.LaucherActivityView">
-        <test-method status="PASS" signature="before()[pri:0, instance:InstagramFeeding.LaucherActivityView@2bec854f]" name="before" is-config="true" duration-ms="5" started-at="2020-07-09T00:13:50Z" finished-at="2020-07-09T00:13:50Z">
+        <test-method status="PASS" signature="before()[pri:0, instance:InstagramFeeding.LaucherActivityView@10b3df93]" name="before" is-config="true" duration-ms="8419" started-at="2020-07-09T22:43:34Z" finished-at="2020-07-09T22:43:43Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- before -->
-        <test-method status="FAIL" signature="test()[pri:0, instance:InstagramFeeding.LaucherActivityView@2bec854f]" name="test" duration-ms="12399" started-at="2020-07-09T00:13:50Z" finished-at="2020-07-09T00:14:02Z">
-          <exception class="org.openqa.selenium.WebDriverException">
-            <message>
-              <![CDATA[An unknown server-side error occurred while processing the command. Original error: Could not proxy command to remote server. Original error: Error: socket hang up
-Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
-System info: host: 'dinh.local', ip: 'fe80:0:0:0:89:dc51:1f8c:e091%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.5', java.version: '1.8.0_231'
-Driver info: io.appium.java_client.android.AndroidDriver
-Capabilities {appActivity: com.instagram.mainactivity...., appPackage: com.instagram.android, automationName: UiAutomator2, databaseEnabled: false, desired: {appActivity: com.instagram.mainactivity...., appPackage: com.instagram.android, automationName: UiAutomator2, deviceName: xiaomi, noReset: true, platformName: android}, deviceApiLevel: 28, deviceManufacturer: Xiaomi, deviceModel: Redmi Note 8, deviceName: 1594fa75, deviceScreenDensity: 440, deviceScreenSize: 1080x2340, deviceUDID: 1594fa75, javascriptEnabled: true, locationContextEnabled: false, networkConnectionEnabled: true, noReset: true, pixelRatio: 2.75, platform: LINUX, platformName: Android, platformVersion: 9, statBarHeight: 80, takesScreenshot: true, viewportRect: {height: 2050, left: 0, top: 80, width: 1080}, warnings: {}, webStorageEnabled: false}
-Session ID: d52c272e-559a-4c00-8ef4-6451e864d636]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.WebDriverException: An unknown server-side error occurred while processing the command. Original error: Could not proxy command to remote server. Original error: Error: socket hang up
-Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
-System info: host: 'dinh.local', ip: 'fe80:0:0:0:89:dc51:1f8c:e091%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.5', java.version: '1.8.0_231'
-Driver info: io.appium.java_client.android.AndroidDriver
-Capabilities {appActivity: com.instagram.mainactivity...., appPackage: com.instagram.android, automationName: UiAutomator2, databaseEnabled: false, desired: {appActivity: com.instagram.mainactivity...., appPackage: com.instagram.android, automationName: UiAutomator2, deviceName: xiaomi, noReset: true, platformName: android}, deviceApiLevel: 28, deviceManufacturer: Xiaomi, deviceModel: Redmi Note 8, deviceName: 1594fa75, deviceScreenDensity: 440, deviceScreenSize: 1080x2340, deviceUDID: 1594fa75, javascriptEnabled: true, locationContextEnabled: false, networkConnectionEnabled: true, noReset: true, pixelRatio: 2.75, platform: LINUX, platformName: Android, platformVersion: 9, statBarHeight: 80, takesScreenshot: true, viewportRect: {height: 2050, left: 0, top: 80, width: 1080}, warnings: {}, webStorageEnabled: false}
-Session ID: d52c272e-559a-4c00-8ef4-6451e864d636
-at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
-at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
-at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
-at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
-at io.appium.java_client.remote.AppiumCommandExecutor.execute(AppiumCommandExecutor.java:239)
-at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
-at io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:42)
-at io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)
-at io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)
-at org.openqa.selenium.remote.RemoteWebDriver$RemoteWebDriverOptions$RemoteWindow.getPosition(RemoteWebDriver.java:826)
-at InstagramFeeding.MainActivityView.touchSomeOneStory(MainActivityView.java:134)
-at InstagramFeeding.MainActivityView.clickTabOnNavigationBar(MainActivityView.java:75)
-at InstagramFeeding.MainActivityView.test(MainActivityView.java:51)
-at InstagramFeeding.LaucherActivityView$1.onResult(LaucherActivityView.java:80)
-at InstagramFeeding.LaucherActivityViewModel$1.onResult(LaucherActivityViewModel.java:55)
-at InstagramFeeding.LaucherActivityModel.getElementOnString(LaucherActivityModel.java:45)
-at InstagramFeeding.LaucherActivityViewModel.getContinueAsFBId(LaucherActivityViewModel.java:64)
-at InstagramFeeding.LaucherActivityView.ContinueAsFB(LaucherActivityView.java:100)
-at InstagramFeeding.LaucherActivityView.test(LaucherActivityView.java:65)
-at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-at java.lang.reflect.Method.invoke(Method.java:498)
-at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
-at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
-at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
-at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
-at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
-at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-at org.testng.TestRunner.privateRun(TestRunner.java:648)
-at org.testng.TestRunner.run(TestRunner.java:505)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
-at org.testng.SuiteRunner.run(SuiteRunner.java:364)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
-at org.testng.TestNG.runSuites(TestNG.java:1049)
-at org.testng.TestNG.run(TestNG.java:1017)
-at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
-at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.WebDriverException -->
+        <test-method status="PASS" signature="test()[pri:0, instance:InstagramFeeding.LaucherActivityView@10b3df93]" name="test" duration-ms="7125" started-at="2020-07-09T22:43:43Z" finished-at="2020-07-09T22:43:50Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- test -->
-        <test-method status="PASS" signature="after()[pri:0, instance:InstagramFeeding.LaucherActivityView@2bec854f]" name="after" is-config="true" duration-ms="368" started-at="2020-07-09T00:14:02Z" finished-at="2020-07-09T00:14:03Z">
+        <test-method status="PASS" signature="after()[pri:0, instance:InstagramFeeding.LaucherActivityView@10b3df93]" name="after" is-config="true" duration-ms="188" started-at="2020-07-09T22:43:50Z" finished-at="2020-07-09T22:43:50Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- after -->
