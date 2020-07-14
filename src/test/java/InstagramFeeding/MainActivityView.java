@@ -67,7 +67,7 @@ public class MainActivityView extends BaseView {
 
 			try {
 				Thread.sleep(1000);
-				for (int i = 0; i < 50; i++) {
+				for (int i = 0; i < 500; i++) {
 
 					MultiTouchAction m = new MultiTouchAction(this.driver);
 					m.add(getTouchAction()).add(getTouchAction()).perform();
@@ -113,11 +113,13 @@ public class MainActivityView extends BaseView {
 
 		int number_random1 = 2;// (int)getRandomNumber(2,5);
 		int number_random2 = 6;// (int)getRandomNumber(2,5);
-		LongPressOptions lpo = new LongPressOptions().withDuration(Duration.ofMillis(100))
+		LongPressOptions lpo = new LongPressOptions().withDuration(Duration.ofMillis(5000))
 				.withPosition(new PointOption().point(sizeX / number_random1, sizeY * number_random2 / 10));
-		toa.longPress(lpo).moveTo(new PointOption().point(sizeX / number_random1, sizeY * (number_random2 - 2) / 10))
+		toa.longPress(lpo).moveTo(new PointOption().point(sizeX / number_random1, sizeY * (number_random2*10 - 1*10+5) / 100))
 				.release();
 
+		
+		
 		return toa;
 
 	}
@@ -130,20 +132,28 @@ public class MainActivityView extends BaseView {
 
 	public void touchSomeOneStory() {
 
-		int screenX = this.driver.manage().window().getPosition().getX();
-		int screenY = this.driver.manage().window().getPosition().getX();
+		
 		int sizeX = this.driver.manage().window().getSize().getWidth();
 		int sizeY = this.driver.manage().window().getSize().getHeight();
 
 		MultiTouchAction m = new MultiTouchAction(this.driver);
-		int number_random = 9;// (int) getRandomNumber(2, 9);
-		for (int i = 0; i < 10; i++) {
+		int number_random =  (int) getRandomNumber(2, 9);
+		int i=0;
+	//	for (int i = 0; i < 5; i++) 
+		{
 			TouchAction toa = new AndroidTouchAction(this.driver);
-			toa.press(new PointOption().point(i + sizeX / number_random, i + sizeY * number_random / 10)).release();
-			m.add(toa);
+			
+			LongPressOptions lpo = new LongPressOptions().withDuration(Duration.ofNanos(5000))
+					.withPosition(new PointOption().point(i + sizeX / number_random, i + sizeY * number_random / 10));
+			
+			toa.tap(new PointOption().point(i + sizeX / number_random, i + sizeY * number_random / 10)).release().perform();
+		
 		}
-		m.perform();
 
+
+		
+	
+		
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -151,11 +161,14 @@ public class MainActivityView extends BaseView {
 			e.printStackTrace();
 		}
 
+		
 		By by_back = By.id("com.instagram.android:id/action_bar_button_back");
 		MobileElement element_back = app.findElement(by_back, 1);
 
 		if (null != element_back) {
 
+			//image
+			
 			SweepMultipleImageLeftIfNeed();
 
 			element_back.click();
@@ -240,7 +253,41 @@ public class MainActivityView extends BaseView {
 	}
 
 	public void WatchVideoAndClickCloseButton() {
-		closeVideoView();
+		boolean sweepLeft=false;
+		boolean sweepDown=true;
+		if(false==closeVideoView())
+		{
+			// no click button
+			
+			
+			By reel_view_progress=By.xpath("//*[@resource-id=\"com.instagram.android:id/reel_viewer_progress_bar\"]");
+			MobileElement element = app.findElement(reel_view_progress, 1);
+			if(null!=element)
+			{
+				if(true==sweepDown)
+				{
+					int sizeX = this.driver.manage().window().getSize().getWidth();
+					int sizeY = this.driver.manage().window().getSize().getHeight();
+					int number_random1 = 2;// (int)getRandomNumber(2,5);
+					int number_random2 = 8;// (int)getRandomNumber(2,5);
+//				
+					Point startPosition = new Point(sizeX / number_random1, sizeY * 3 / 10);
+					Point endPosition = new Point(sizeX / number_random1, sizeY * (number_random2) / 10);
+
+					
+					TouchAction toa = new AndroidTouchAction(this.driver);
+
+				
+					LongPressOptions lpo = new LongPressOptions().withDuration(Duration.ofMillis(10))
+							.withPosition(new PointOption().point(startPosition));
+					toa.longPress(lpo).moveTo(new PointOption().point(endPosition))
+							.release().perform();
+
+					
+				}
+				
+			}
+		}
 	}
 
 	public void WatchVideoAndWeepDown() {
@@ -264,13 +311,18 @@ public class MainActivityView extends BaseView {
 		
 	}
 
-	public void closeVideoView() {
+	public boolean  closeVideoView() {
 
+		boolean ret=false;
 		By by_close = By.id("com.instagram.android:id/close_button");
 		MobileElement element_close = app.findElement(by_close, 1);
 		if (null != element_close)
+		{
+			ret=true;
 			element_close.click();
-
+			
+		}
+		return ret;
 	}
 
 	public void longTouchSomeOneStory() {
@@ -283,6 +335,7 @@ public class MainActivityView extends BaseView {
 		TouchAction toa = new AndroidTouchAction(this.driver);
 
 		int number_random = (int) getRandomNumber(2, 9);
+		System.out.print("____"+number_random);
 
 		LongPressOptions lpo = new LongPressOptions().withDuration(Duration.ofMillis(1000))
 				.withPosition(new PointOption().point(sizeX / number_random, sizeY * number_random / 10));
