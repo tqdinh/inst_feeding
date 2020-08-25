@@ -86,6 +86,8 @@ public class InstagramAppication {
 
 		if(true==SleepUntilInmilisecs(locator, timeoutInSecond))
 			ret = (MobileElement) driver.findElement(locator);
+
+	//	System.out.print("found="+ret);
 		
 		return ret;
 	}
@@ -105,7 +107,7 @@ public class InstagramAppication {
 			mobileWait = setupFluentWait(timeoutInSecond, 1);
 			mobileWait.until(ExpectedConditions.visibilityOfElementLocated(object));
 		} catch (Exception e) {
-			System.out.print(e.toString());
+			System.out.println("Sleep Until "+e.toString());
 			ret = false;
 		}
 		return ret;
