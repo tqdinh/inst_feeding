@@ -1,4 +1,4 @@
-package fiato.testing;
+package Facebook;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,15 +25,18 @@ import io.appium.java_client.touch.offset.PointOption;
 public class DEMO_FaceBook {
 
 	public static final int DEFAULT_TIMEOUT = 15;// 10 secs ;
-
+	public static final String excelFilePath = "Facebook/DataAutoFB.xlsx";	
+	public static final String sheetFB = "FB";
+	
 	//Data test
-	public static String strUsername = "fancythiezhang@gmail.com";
-	public static String strPassword = "tudangnhap12345";
+	public static String strUsernameFB;
+	public static String strPasswordFB;
+	public static String strDeviceUIID;
 	public static String strSearch = "Hoc tieng anh";
 	public static String strComment = "Wowwww, it's amazing";
 	public static int scrollDownTimes = 5;
 	public static int scrollUpTimes = 3;
-	public static int scrollDown1 = 1;
+	public static int scrollDownFewTimes = 4;
 	
 
 	public AppiumDriver driver;
@@ -65,7 +68,9 @@ public class DEMO_FaceBook {
 	By makePostTb = MobileBy.AccessibilityId("Make a post on Facebook");
 	By seachBtn = MobileBy.AccessibilityId("Search Facebook");
 	By messengerBtn = MobileBy.AccessibilityId("Messaging");
-	By moreMenuBtn = By.xpath("//*[@content-desc='Messaging']/following::*[contains(@content-desc,'Menu')]");
+//	By moreMenuBtn = By.xpath("//*[@content-desc='Messaging']/following::*[contains(@content-desc,'Menu')]");
+	By moreMenuBtn = By.xpath("//android.view.View[contains(@content-desc,'Menu')]");
+	
 	By logoutBtn = By.xpath("//*[contains(@content-desc,'Log Out')]");
 	
 	
@@ -80,8 +85,13 @@ public class DEMO_FaceBook {
 	By commentSendBtn = MobileBy.AccessibilityId("Send");	
 	
 	
+	//Script noti
+	String scriptStart = "Starting script DEMO autoFB ......";
+	String driverStart = "\nCreated driver successfully";
+	String notLoginFB = "\nYou're currently not yet login FB";
+	String sciptEnd = "\nEnded script DEMO autoFB";
 	
-	//Scenario test: USER PHAI CHUA LOGIN FB
+	//Scenario test: 
 	String step1 = "1. Open FB";
 	String step2 = "2. Input username and password";
 	String step3 = "3. Login FB";
@@ -90,7 +100,7 @@ public class DEMO_FaceBook {
 	String step6 = "6. Scroll down 5 times";
 	String step7 = "7. Scroll up 3 times";
 	String step8 = "8. Click Menu 'Posts'";
-	String step9 = "9. Scroll down 1 time";
+	String step9 = "9. Scroll down few time";
 	String step10 = "10. Click like btn";
 	String step11 = "11. Click comment btn";
 	String step12 = "12. Input then send a message 'Wowwww, it's amazing'";
@@ -99,8 +109,12 @@ public class DEMO_FaceBook {
 	public void demoFB() {		
 		System.out.println(step1);
 		
-		//Try to logout if logged in FB already
-//		logoutIfLoggedIn();
+		// Try to logout if logged in FB already
+		try {
+			logoutIfLoggedIn();
+		} catch (Exception e) {
+			System.out.println(notLoginFB);
+		}
 		
 		loginFB();
 		
@@ -127,7 +141,7 @@ public class DEMO_FaceBook {
 		click(postsMenuBtn);
 		System.out.println(step8);
 		
-		scrollDown(scrollDown1);
+		scrollDown(scrollDownFewTimes);
 		System.out.println(step9);
 		
 		click(likeBtn);
@@ -151,27 +165,35 @@ public class DEMO_FaceBook {
 	
 	//MIX
 	
-	public void logoutIfLoggedIn() {		
+	public void logoutIfLoggedIn() {
 		if (isElementDisplay(loginAnotherAccBtn) && isElementDisplay(makePostTb)) {
-			
+
+			// click 2 time to show MoreMenu button
+			try {
+				click(moreMenuBtn);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				click(moreMenuBtn);
+			}
+
+			// wait menu load
 			try {
 				Thread.sleep(2000);
-				
-				
-			} catch (InterruptedException e) {
+			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
-				
+				e1.printStackTrace();
 			}
-			click(moreMenuBtn);
-			scrollDown(scrollDown1);
+
+			scrollDown(1);
 			click(logoutBtn);
 		}
-	}
+	}	
+	
 	
 	public void loginFB() {
 		click(loginAnotherAccBtn);
-		input(usernameFBTb, strUsername);
-		input(passwordFBTb, strPassword);
+		input(usernameFBTb, strUsernameFB);
+		input(passwordFBTb, strPasswordFB);
 		System.out.println(step2);		
 		
 		click(loginBtn);		
@@ -239,19 +261,31 @@ public class DEMO_FaceBook {
 		return driver.findElement(by);
 	}
 
+	public void setupData() {
+		ExcelManager em = new ExcelManager(excelFilePath,sheetFB);
+		strUsernameFB = em.getUsernameFB(1);
+		strPasswordFB = em.getPasswordFB(1);
+		strDeviceUIID = em.getDeviceUIID(1);
+	}
+	
 	@Before
 	public void before() {
+		System.out.println(scriptStart);
+		
+		setupData();
+		
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("deviceName", "Note8");		
 		capabilities.setCapability("automationName", "UiAutomator2");
-//	    capabilities.setCapability("platformName", "Android");
-//	    capabilities.setCapability("appPackage", "com.android.calculator2");
-//	    capabilities.setCapability("appActivity","com.android.calculator2.Calculator");
+
 		capabilities.setCapability(AndroidMobileCapabilityType.PLATFORM_NAME, "Android");
 		capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.facebook.katana");
 		capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, "com.facebook.katana.LoginActivity");
 //		capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, "com.facebook.katana.app.FacebookSplashScreenActivity");
 
+		//for run NOX only
+//        capabilities.setCapability("udid", "127.0.0.1:62001");
+		
 		//Auto accept all permissions of app. Invalid if noReset = true
 		capabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, "true");
 //		capabilities.setCapability("autoGrantPermissions", "true");
@@ -259,7 +293,7 @@ public class DEMO_FaceBook {
 		//Should use in Inspector Appium
 //		capabilities.setCapability("noReset", "true");
 		
-		//changed DEVICE language after run script auto
+		//changed DEVICE language when and after run script auto to avoid bug of different accs FB
 		capabilities.setCapability("language", "en");
 		capabilities.setCapability("locale", "us");
 		
@@ -270,20 +304,18 @@ public class DEMO_FaceBook {
 
 		try {
 			driver = new AndroidDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
+			driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+			System.out.println(driverStart);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+		}		
 	}
 
 
 	@After
 	public void after() {
 		driver.quit();
+		System.out.println(sciptEnd);
 	}
-
-
-
 }
